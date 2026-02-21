@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://level1_scene"]
+
+[ext_resource type="Script" path="res://scripts/Level.gd" id="1_level_script"]
+[ext_resource type="Script" path="res://scripts/WaveSpawner.gd" id="2_spawner_script"]
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_level_script")
+
+[node name="TileMap" type="TileMap" parent="."]
+# TileMap settings would go here, leaving empty for now as we draw the path via script
+format = 2
+
+[node name="Path2D" type="Path2D" parent="."]
+
+[node name="WaveSpawner" type="Node" parent="."]
+script = ExtResource("2_spawner_script")
