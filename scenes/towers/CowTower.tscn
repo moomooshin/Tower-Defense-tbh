@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3m4n5p6q7r8s"]
+
+[ext_resource type="Script" uid="uid://cyt3qpancldfl" path="res://scripts/CowTower.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_range"]
+radius = 150.0
+
+[node name="CowTower" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(0.4, 0.4)
+
+[node name="Sprite2D_Spot" type="Sprite2D" parent="Sprite2D"]
+scale = Vector2(0.5, 0.5)
+
+[node name="RangeArea" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RangeArea"]
+shape = SubResource("CircleShape2D_range")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(25, 0)
