@@ -26,11 +26,19 @@ func _ready():
 	timer.start()
 
 func _physics_process(_delta):
-	# Periodically update target, not every frame for performance
-	update_target()
+	# Update target only if current one is invalid or lost
+	if not current_target or not is_instance_valid(current_target):
+		update_target()
 	
 	if current_target and is_instance_valid(current_target):
 		look_at(current_target.global_position)
+		
+		# Check if target is still in range (optimization: use distance squared)
+		var dist_sq = global_position.distance_squared_to(current_target.global_position)
+		var range_sq = range_radius * range_radius
+		# Add a small buffer to avoid flickering at edge
+		if dist_sq > range_sq * 1.1: 
+			current_target = null
 	else:
 		current_target = null
 
@@ -68,7 +76,6 @@ func shoot():
 	var projectile := projectile_scene.instantiate()
 	# Set properties before adding to scene
 	projectile.global_position = muzzle.global_position
-	projectile.target_position = current_target.global_position
 	
 	# Calculate direction immediately
 	projectile.direction = (current_target.global_position - muzzle.global_position).normalized()
@@ -76,5 +83,5 @@ func shoot():
 	
 	projectile.damage = damage
 	
-	# Add projectile to the main scene, not as child of tower
-	get_tree().root.add_child(projectile)
+	# Add projectile to the current scene (Level) instead of root
+	get_tree().current_scene.add_child(projectile)

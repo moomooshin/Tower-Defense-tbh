@@ -9,8 +9,9 @@ var target_position: Vector2
 var direction: Vector2
 
 func _ready():
-	# If target_position is set, calculate direction
-	if target_position:
+	# If direction is not set but target_position is, calculate it
+	# (This handles cases where direction wasn't set by spawner)
+	if direction == Vector2.ZERO and target_position != Vector2.ZERO:
 		direction = (target_position - global_position).normalized()
 		rotation = direction.angle()
 		
