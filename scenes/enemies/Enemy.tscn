@@ -1,20 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://enemy_basic_scene"]
+[gd_scene load_steps=3 format=3 uid="uid://cw6mopn4s6g27"]
 
-[ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_script"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_enemy"]
-size = Vector2(32, 32)
+[ext_resource type="Script" uid="uid://dv0i2gi47ska1" path="res://scripts/Enemy.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dlhig7qtfdmu1" path="res://icon.svg" id="2_k7o7a"]
 
 [node name="Enemy" type="Area2D"]
 script = ExtResource("1_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 0, 0, 1) # Red color for enemy
-texture = SubResource("PlaceholderTexture2D_enemy")
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("2_k7o7a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-# Placeholder collision shape, will be defined properly in editor or via code if strictly needed, 
-# but for a .tscn text file, we can define a simple circle.
-# However, defining sub-resources for shapes in text format can be verbose. 
-# We'll rely on the Area2D for now.
-pass

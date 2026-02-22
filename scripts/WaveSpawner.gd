@@ -1,5 +1,7 @@
 extends Node
 
+class_name WaveSpawner
+
 @export var enemy_scene: PackedScene
 @export var path_to_follow: Path2D
 @export var spawn_interval: float = 1.5

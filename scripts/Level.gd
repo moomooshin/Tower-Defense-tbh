@@ -1,16 +1,16 @@
 extends Node2D
 
-@onready var path_2d = $Path2D
-@onready var wave_spawner = $WaveSpawner
+@onready var path_2d := $Path2D as Path2D
+@onready var wave_spawner := $WaveSpawner as WaveSpawner
 @onready var tile_map = $TileMap
 
 # Preload the enemy scene to assign to the spawner
-var enemy_scene = preload("res://scenes/enemies/Enemy.tscn")
+var enemy_scene := preload("res://scenes/enemies/Enemy.tscn")
 
 func _ready():
 	# Setup a simple path for the prototype
 	# A rectangular loop: (100, 100) -> (900, 100) -> (900, 500) -> (100, 500) -> (100, 100)
-	var curve = Curve2D.new()
+	var curve := Curve2D.new()
 	curve.add_point(Vector2(100, 100))
 	curve.add_point(Vector2(900, 100))
 	curve.add_point(Vector2(900, 500))

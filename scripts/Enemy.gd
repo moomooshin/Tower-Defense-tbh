@@ -10,10 +10,10 @@ var current_health: int
 func _ready():
 	current_health = max_health
 	
-	# Create a visual representation if one doesn't exist (for the text-based tscn which used a placeholder)
+	# Create a visual representation if one doesn't exist
 	if not has_node("Sprite2D"):
-		var sprite = Sprite2D.new()
-		var texture = PlaceholderTexture2D.new()
+		var sprite := Sprite2D.new()
+		var texture := PlaceholderTexture2D.new()
 		texture.size = Vector2(32, 32)
 		sprite.texture = texture
 		sprite.modulate = Color.RED
@@ -21,8 +21,8 @@ func _ready():
 	
 	# Create a collision shape if one doesn't exist
 	if not has_node("CollisionShape2D"):
-		var collision = CollisionShape2D.new()
-		var shape = CircleShape2D.new()
+		var collision := CollisionShape2D.new()
+		var shape := CircleShape2D.new()
 		shape.radius = 16
 		collision.shape = shape
 		add_child(collision)
