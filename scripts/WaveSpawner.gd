@@ -21,14 +21,13 @@ func _process(delta):
 	if spawning:
 		timer += delta
 		if timer >= spawn_interval:
-			spawn_enemy()
-			timer = 0.0
+			if enemies_spawned < wave_count:
+				spawn_enemy()
+				timer = 0.0
+			else:
+				spawning = false
 
 func spawn_enemy():
-	if enemies_spawned >= wave_count:
-		spawning = false
-		return
-
 	var new_path_follow := PathFollow2D.new()
 	path_to_follow.add_child(new_path_follow)
 	new_path_follow.loop = false # Ensure they don't loop back
