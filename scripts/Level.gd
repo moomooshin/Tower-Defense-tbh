@@ -27,6 +27,7 @@ func _ready():
 	await get_tree().create_timer(1.0).timeout
 	wave_spawner.start_wave()
 
+
 func _draw():
 	# Debug draw the path
 	if path_2d and path_2d.curve:
