@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://tower_selection_panel"]
+
+[ext_resource type="Script" uid="uid://tower_selection_script" path="res://scripts/ui/TowerSelectionPanel.gd" id="1_script"]
+
+[node name="TowerSelectionPanel" type="Control"]
+script = ExtResource("1_script")
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = -20.0
+offset_bottom = 100.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+text = "Towers"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TowerButtons" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 1
+
+[node name="MoneyDisplay" type="Label" parent="VBoxContainer"]
+text = "Money: $"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="VBoxContainer"]
+text = "Close"
+layout_mode = 1
+
+[node name="TowerButtonTemplate" type="Button" parent="TowerButtons"]
+visible = false
+text = "Tower"
+layout_mode = 1
+
+[node name="TowerCostLabel" type="Label" parent="TowerButtonTemplate"]
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 0.0
+offset_right = -5.0
+offset_bottom = 0.0
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TowerSprite" type="TextureRect" parent="TowerButtonTemplate"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 45.0
+offset_bottom = 45.0
+stretch_mode = 6
+
+[node name="TowerNameLabel" type="Label" parent="TowerButtonTemplate"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 55.0
+offset_top = 0.0
+offset_right = -55.0
+offset_bottom = 0.0
+horizontal_alignment = 0
+vertical_alignment = 1

@@ -1,34 +1,53 @@
 extends Node2D
 
-@onready var path_2d := $Path2D as Path2D
-@onready var wave_spawner := $WaveSpawner as WaveSpawner
-@onready var tile_map = $TileMap
+@export var tile_map: TileMap
+@export var wave_spawner: Node
+@export var game_manager: Node
 
-# Preload the enemy scene to assign to the spawner
-var enemy_scene := preload("res://scenes/enemies/Enemy.tscn")
+var tower_placement_manager: TowerPlacementManager = null
+var tower_selection_manager: TowerSelectionManager = null
 
 func _ready():
-	# Setup a simple path for the prototype
-	# A rectangular loop: (100, 100) -> (900, 100) -> (900, 500) -> (100, 500) -> (100, 100)
-	var curve := Curve2D.new()
-	curve.add_point(Vector2(100, 100))
-	curve.add_point(Vector2(900, 100))
-	curve.add_point(Vector2(900, 500))
-	curve.add_point(Vector2(100, 500))
-	curve.add_point(Vector2(100, 100)) # Loop back
+	# Setup tower placement manager
+	tower_placement_manager = TowerPlacementManager.new()
+	tower_placement_manager.tile_map = tile_map
+	tower_placement_manager.ghost_tower_scene = preload("res://scenes/towers/CowTower.tscn")
+	tower_placement_manager.tower_scene = preload("res://scenes/towers/CowTower.tscn")
+	add_child(tower_placement_manager)
 	
-	path_2d.curve = curve
+	# Setup tower selection manager
+	tower_selection_manager = TowerSelectionManager.new()
+	tower_selection_manager.tower_placement_manager = tower_placement_manager
 	
-	# Configure Spawner
-	wave_spawner.path_to_follow = path_2d
-	wave_spawner.enemy_scene = enemy_scene
+	# Setup tower data
+	var cow_tower_data = {
+		name = "Cow Tower",
+		cost = 100,
+		scene_path = "res://scenes/towers/CowTower.tscn",
+		description = "Basic tower that shoots milk",
+		sprite = preload("res://icon.svg") # TODO: Replace with actual tower sprite
+	}
+	tower_selection_manager.tower_data = [cow_tower_data]
 	
-	# Start the first wave after a short delay
-	await get_tree().create_timer(1.0).timeout
-	wave_spawner.start_wave()
+	# Add to scene
+	add_child(tower_selection_manager)
+	
+	# Connect game manager signals
+	if game_manager:
+		game_manager.money_changed.connect(_on_money_changed)
 
+func _unhandled_input(event):
+	if event is InputEventKey and event.pressed:
+		if event.scancode == KEY_T:
+			# Toggle tower selection panel
+			if tower_selection_manager:
+				tower_selection_manager.show_panel()
+		elif event.scancode == KEY_ESCAPE:
+			# Cancel placement
+			if tower_selection_manager:
+				tower_selection_manager.hide_panel()
 
-func _draw():
-	# Debug draw the path
-	if path_2d and path_2d.curve:
-		draw_polyline(path_2d.curve.get_baked_points(), Color.WHITE, 2.0)
+func _on_money_changed(new_amount: int):
+	# Update tower selection panel money display
+	if tower_selection_manager:
+		tower_selection_manager._update_money_display()
