@@ -11,12 +11,12 @@ class_name CowTower
 @onready var timer: Timer = $Timer
 @onready var muzzle: Marker2D = $Muzzle
 
-var projectile_scene = preload("res://scenes/projectiles/MilkProjectile.tscn")
+var projectile_scene := preload("res://scenes/projectiles/MilkProjectile.tscn")
 var current_target: Area2D = null
 
 func _ready():
 	# Setup range
-	var circle = CircleShape2D.new()
+	var circle := CircleShape2D.new()
 	circle.radius = range_radius
 	collision_shape.shape = circle
 	
@@ -25,7 +25,7 @@ func _ready():
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# Periodically update target, not every frame for performance
 	update_target()
 	
@@ -41,10 +41,9 @@ func update_target():
 		current_target = null
 		return
 
-	# Simple targeting: Find closest enemy or first in array
-	# Ideal: Find enemy furthest along path
+	# Find enemy furthest along path
 	var best_target = null
-	var max_progress = -1.0
+	var max_progress: float = -1.0
 	
 	for area in overlapping_areas:
 		if is_instance_valid(area) and area.has_method("take_damage"):
@@ -65,8 +64,8 @@ func shoot():
 	if not current_target or not is_instance_valid(current_target):
 		current_target = null
 		return
-		
-	var projectile = projectile_scene.instantiate()
+	
+	var projectile := projectile_scene.instantiate()
 	# Set properties before adding to scene
 	projectile.global_position = muzzle.global_position
 	projectile.target_position = current_target.global_position

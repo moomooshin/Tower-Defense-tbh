@@ -17,10 +17,10 @@ func _ready():
 	# Delete after 5 seconds to prevent memory leaks if it misses everything
 	get_tree().create_timer(5.0).timeout.connect(queue_free)
 
-func _process(delta):
+func _process(delta: float):
 	position += direction * speed * delta
 
-func _on_area_entered(area):
+func _on_area_entered(area: Area2D):
 	if area.has_method("take_damage"):
 		area.take_damage(damage)
 		queue_free()
